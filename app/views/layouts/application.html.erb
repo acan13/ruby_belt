@@ -15,6 +15,9 @@
         <a href="/users/<%= current_user.id %>/edit">Edit Profile</a> |
         <a data-method="delete" href="/sessions/destroy">Log Out</a>
       </p>
+      <% if User.where(id:current_user.invited_by).where.not(id:current_user.invited).where.not(id:current_user.ignored_users).length > 0  and not current_page? ("/professional_profile")%>
+        <p>You currently have <%= User.where(id:current_user.invited_by).where.not(id:current_user.invited).where.not(id:current_user.ignored_users).length %> <a href="/professional_profile">waiting invitations.</a></p>
+      <% end %>
     </div>
   <% end %>
 
