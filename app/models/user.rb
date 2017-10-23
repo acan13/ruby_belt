@@ -6,6 +6,12 @@ class User < ActiveRecord::Base
   has_many :received_invitations, foreign_key: :invitee_id, class_name: "Invitation"
   has_many :invited_by, through: :received_invitations, source: :inviter
 
+  has_many :connections, foreign_key: :connector_id
+  has_many :connected, through: :connections, source: :connectee
+
+  has_many :ignoreds, foreign_key: :ignorer_id
+  has_many :ignored_users, through: :ignoreds, source: :ignoree
+
 
   validates :first_name, :last_name, presence: true
   validates_email_format_of :email

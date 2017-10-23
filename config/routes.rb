@@ -4,10 +4,16 @@ Rails.application.routes.draw do
   post 'sessions/create' => 'sessions#create'
   delete 'sessions/destroy' => 'sessions#destroy'
 
+  get '/users' => 'users#index'
+  get '/professional_profile' => 'users#professional_profile'
   get 'users/:user_id/edit' => 'users#edit'
-  get 'users/:user_id' => 'users#show'
   post 'users/create' => 'users#create'
   patch 'users/:user_id' => 'users#update'
+  get 'users/:user_id' => 'users#show'
+
+  get '/invitations/:invitee_id' => 'invitations#create'
+
+  get '/ignoreds/:ignoree_id' => 'ignoreds#create'
 
   #this line needs to be changed
   get '/put_main_index_path_here' => 'users#temporary'

@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   skip_before_action :require_login, only: :create
-  before_action :user_authorization, except: [:temporary, :create]
+  before_action :user_authorization, except: [:temporary, :create, :index, :show, :professional_profile]
 
   def create
     user = User.create(user_params)
@@ -11,12 +11,19 @@ class UsersController < ApplicationController
       redirect_to "/sessions/new"
     else
       session[:user_id] = user.id
-      redirect_to "/put_main_index_path_here"
+      redirect_to "/users"
     end
   end
 
   def show
+    @user = User.find(params[:user_id].to_i)
+  end
+
+  def professional_profile
     @user = current_user
+    @invitations = User.where(id:@user.invited_by).where.not(id:@user.invited).
+      where.not(id:@user.ignored_users)
+    @network = User.where(id:@user.invited).where(id:@user.invited_by)
   end
 
   def edit
@@ -30,7 +37,7 @@ class UsersController < ApplicationController
     if user.changed?
       if user.save
         #change this line
-        redirect_to "/put_main_index_path_here"
+        redirect_to "/professional_profile"
       else
         flash[:errors] = user.errors.full_messages
         redirect_to "/users/#{user.id}/edit"
@@ -46,6 +53,11 @@ class UsersController < ApplicationController
 
   def destroy
 
+  end
+
+  def index
+    @possible_connections = User.where.not(id:current_user.id).
+      where.not(id:current_user.invited_by.where.not(id:current_user.ignored_users)).where.not(id:current_user.invited)
   end
 
   def temporary

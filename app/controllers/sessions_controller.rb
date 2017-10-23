@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
 
   skip_before_action :require_login, except: :destroy
-  
+
   def new
   end
 
@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       redirect_to "/sessions/new"
     else
       session[:user_id] = user.id
-      redirect_to "/put_main_index_path_here"
+      redirect_to "/users"
     end
   end
 

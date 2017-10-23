@@ -23,6 +23,10 @@
           <input type="text" name="user[email]" value="<%= @user.email %>">
         </p>
         <p>
+          <label for="user[description]">Description: </label>
+          <textarea name="user[description]" rows="8" cols="80"><%= @user.description %></textarea>
+        </p>
+        <p>
           <input type="submit" name="" value="Update">
         </p>
       </form>

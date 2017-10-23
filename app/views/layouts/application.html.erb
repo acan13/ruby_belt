@@ -9,9 +9,9 @@
 <body>
   <% if current_user %>
     <div id="logged_in">
-      <p>Welcome <a href="/users/<%= current_user.id %>"><%= current_user.first_name %> <%= current_user.last_name %></a></p>
+      <p>Welcome <a href="/professional_profile"><%= current_user.first_name %> <%= current_user.last_name %></a></p>
       <p>
-        <a href="/put_main_index_path_here">Home</a> |
+        <a href="/users">Home</a> |
         <a href="/users/<%= current_user.id %>/edit">Edit Profile</a> |
         <a data-method="delete" href="/sessions/destroy">Log Out</a>
       </p>

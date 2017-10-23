@@ -11,10 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171023180741) do
+ActiveRecord::Schema.define(version: 20171023195754) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "connections", force: :cascade do |t|
+    t.integer  "connector_id"
+    t.integer  "connectee_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "connections", ["connectee_id"], name: "index_connections_on_connectee_id", using: :btree
+  add_index "connections", ["connector_id"], name: "index_connections_on_connector_id", using: :btree
+
+  create_table "ignoreds", force: :cascade do |t|
+    t.integer  "ignorer_id"
+    t.integer  "ignoree_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "ignoreds", ["ignoree_id"], name: "index_ignoreds_on_ignoree_id", using: :btree
+  add_index "ignoreds", ["ignorer_id"], name: "index_ignoreds_on_ignorer_id", using: :btree
 
   create_table "invitations", force: :cascade do |t|
     t.integer  "inviter_id"
